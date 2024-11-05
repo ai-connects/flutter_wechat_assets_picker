@@ -6,7 +6,7 @@ import 'package:photo_manager/photo_manager.dart';
 
 const String packageName = 'wechat_assets_picker';
 
-const int defaultAssetsPerPage = 5;
+const int defaultAssetsPerPage = 20;
 const int defaultMaxAssetsCount = 9;
 
 const ThumbnailSize defaultAssetGridPreviewSize = ThumbnailSize.square(80);
