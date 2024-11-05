@@ -9,5 +9,5 @@ const String packageName = 'wechat_assets_picker';
 const int defaultAssetsPerPage = 20;
 const int defaultMaxAssetsCount = 9;
 
-const ThumbnailSize defaultAssetGridPreviewSize = ThumbnailSize.square(100);
+const ThumbnailSize defaultAssetGridPreviewSize = ThumbnailSize.square(200);
 const ThumbnailSize defaultPathThumbnailSize = ThumbnailSize.square(80);
