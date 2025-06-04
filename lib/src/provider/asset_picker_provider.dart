@@ -364,8 +364,33 @@ class DefaultAssetPickerProvider
       filterOption: options,
       onlyAll: onlyAll,
     );
+    
+    final AssetPathEntity allPhotosAlbum = list.first; // 보통 "모든 사진" 앨범
+    List<AssetEntity> allAssets = [];
+    int page = 0;
+    int size = 50; // 한 번에 가져올 자산 수
 
-    _paths = list.map((p) {
+    while (true) {
+      final List<AssetEntity> currentAssets =
+          await allPhotosAlbum.getAssetListPaged(
+        page: page,
+        size: size,
+      );
+      if (currentAssets.isEmpty) break;
+      allAssets.addAll(currentAssets);
+      page++;
+    }
+
+    // 여기서 iCloud 사진을 필터링합니다.
+    // isLocallyAvailable이 false인 자산은 목록에 포함하지 않습니다.
+    final List<AssetEntity> localAssets = await Future.wait(
+      allAssets.map((asset) async {
+        final isAvailable = await asset.isLocallyAvailable();
+        return isAvailable ? asset : null;
+      }),
+    ).then((results) => results.whereType<AssetEntity>().toList());
+
+    _paths = localAssets.map((p) {
       final int? assetCount;
       if (keepPreviousCount) {
         assetCount =
