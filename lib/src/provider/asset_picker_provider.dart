@@ -383,12 +383,12 @@ class DefaultAssetPickerProvider
 
     // 여기서 iCloud 사진을 필터링합니다.
     // isLocallyAvailable이 false인 자산은 목록에 포함하지 않습니다.
-    final List<AssetEntity> localAssets = await Future.wait(
+    final List<AssetPathEntity> localAssets = await Future.wait(
       allAssets.map((asset) async {
         final isAvailable = await asset.isLocallyAvailable();
         return isAvailable ? asset : null;
       }),
-    ).then((results) => results.whereType<AssetEntity>().toList());
+    ).then((results) => results.whereType<AssetPathEntity>().toList());
 
     _paths = localAssets.map((p) {
       final int? assetCount;
